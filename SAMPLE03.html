@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img src="bitkep.jpg" id="bitmap" width="32" height="32"><br>
+
+<canvas id="drawing_area" width="800" height="2700"
+style="border:1px solid #000000;">
+The Canvas is not supported!
+</canvas>
+
+<script>
+
+var canvas = document.getElementById("drawing_area");
+var drawing = canvas.getContext("2d");
+var myimage;
+
+window.onload = function() {
+myimage = document.getElementById("bitmap");
+drawing.drawImage(myimage, 10, 2460,70,70);
+}
+
+function ellipse(cx, cy, rx, ry)
+{
+        drawing.save(); // save canvas state
+        drawing.fillStyle = "#000000";
+        drawing.strokeStyle="#000000";
+        drawing.beginPath();
+
+        drawing.translate(cx-rx, cy-ry);
+        drawing.scale(rx, ry);
+        drawing.arc(1, 1, 1, 0, 2 * Math.PI, false);
+
+        drawing.restore(); // restore canvas state
+        drawing.fill();
+        drawing.stroke();
+}
+
+drawing.font="bold 28px arial";
+drawing.fillText("HTML5 Canvas pocket reference",10,30);
+drawing.font="bold 16px arial";
+
+drawing.fillText("Transformation - zoom/scale",10,50);
+drawing.beginPath();
+drawing.rect(20, 60, 150, 50);
+drawing.stroke();
+drawing.save();
+drawing.scale(0.5,0.5);
+drawing.beginPath();
+drawing.rect(20, 160, 150, 50);
+drawing.stroke();
+drawing.restore(); //restore starting state
+
+drawing.fillText("Transformation - rotate",10,150);
+drawing.save();
+drawing.rotate(2*Math.PI/180);
+drawing.beginPath();
+drawing.rect(20, 160, 150, 50);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Transformation - origin",10,250);
+drawing.save();
+drawing.translate(70,0);
+drawing.beginPath();
+drawing.rect(20, 260, 150, 50);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Transformation - Transformation matrices",10,350);
+drawing.save();
+drawing.transform(0, 0.1, 1, 1	, -330, 0);
+drawing.beginPath();
+drawing.rect(20, 360, 150, 50);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Drawing properties - transparency",10,450);
+drawing.save();
+drawing.fillStyle="#FF0000";
+drawing.fillRect(20,460,150,70);
+drawing.fill();
+drawing.globalAlpha = 0.5;
+drawing.fillStyle="#FFFF00";
+drawing.fillRect(120,465,150,60);
+drawing.fill();
+drawing.restore();
+
+drawing.fillText("Drawing properties - bit masking",10,550);
+drawing.save();
+drawing.fillStyle="#FF0000";
+drawing.fillRect(20,560,150,70);
+drawing.fill();
+drawing.globalCompositeOperation = "xor";
+drawing.fillStyle="#FFFF00";
+drawing.fillRect(120,565,150,60);
+drawing.fill();
+drawing.restore();
+
+drawing.fillText("Drawing properties - line color",10,650);
+drawing.save();
+drawing.strokeStyle="#FF0000";
+drawing.strokeRect(20,660,150,70);
+drawing.restore();
+
+drawing.fillText("Drawing properties - line tchickness",10,750);
+drawing.save();
+drawing.lineWidth=10;
+drawing.strokeStyle="#FF0000";
+drawing.strokeRect(20,760,150,70);
+drawing.restore();
+
+drawing.fillText("Drawing properties - line caps",10,850);
+drawing.save();
+drawing.strokeStyle="#000000";
+drawing.lineWidth=10;
+drawing.lineCap="round";
+drawing.beginPath();
+drawing.moveTo(20,900);
+drawing.lineTo(220,900);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Drawing properties - line joins",10,950);
+drawing.save();
+drawing.strokeStyle="#000000";
+drawing.lineWidth=10;
+drawing.lineJoin = "round";
+drawing.beginPath();
+drawing.moveTo(20,1000);
+drawing.lineTo(120,1000);
+drawing.lineTo(20,970);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Drawing properties - miter",10,1050);
+drawing.save();
+drawing.fillStyle = 0;
+drawing.strokeStyle="#000000";
+drawing.lineWidth=20;
+drawing.lineJoin = "miter";
+drawing.miterLimit = 5;
+drawing.beginPath();
+drawing.moveTo(20,1100);
+drawing.lineTo(120,1100);
+drawing.lineTo(20,1070);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Drawing properties - solid fill",10,1150);
+drawing.save();
+drawing.fillStyle = "#444444";
+drawing.fillRect(20, 1160, 150, 70);
+drawing.fill();
+drawing.restore();
+drawing.lineWidth=2;
+drawing.restore();
+
+drawing.fillText("Drawing properties - gradient fill",10,1250);
+drawing.save();
+var atmenet = drawing.createLinearGradient(0, 1300, 200, 1400);
+atmenet.addColorStop(0, "black");
+atmenet.addColorStop(1, "white");
+drawing.fillStyle = atmenet;
+drawing.fillRect(20, 1260, 150, 70);
+drawing.fill();
+drawing.restore();
+
+drawing.fillText("Drawing properties - bitmap fill/pattern",10,1350);
+drawing.save();
+var bitmap = document.getElementById("bitmap")
+var mypattern = drawing.createPattern(bitmap, "repeat");
+drawing.fillStyle = mypattern;
+drawing.rect(20, 1360, 150, 70);
+drawing.fill();
+drawing.restore();
+
+drawing.fillText("Drawing properties - shadows",10,1450);
+drawing.save();
+drawing.fillStyle = "#aaaaaa";
+drawing.shadowBlur = 20;
+drawing.shadowColor = "black";
+drawing.shadowOffsetX = 20;
+drawing.shadowOffsetY = 20;
+drawing.fillRect(20, 1460, 100, 60);
+drawing.restore();
+
+drawing.fillText("Shapes - line",10,1550);
+drawing.save();
+drawing.beginPath();
+drawing.moveTo(20, 1560);
+drawing.lineTo(300, 1590);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Shapes - quadratic Bezier curve",10,1650);
+drawing.save();
+drawing.beginPath();
+drawing.moveTo(20, 1660);
+drawing.quadraticCurveTo(30, 1740, 200, 1660);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Shapes - Bezier curve",10,1750);
+drawing.save();
+drawing.beginPath();
+drawing.moveTo(20, 1760);
+drawing.bezierCurveTo(10, 1820, 230, 1840, 250, 1760);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Shapes - arc",10,1850);
+drawing.save();
+drawing.beginPath();
+drawing.arc(100, 1900, 30, 0, 1.5 * Math.PI);
+drawing.stroke();
+drawing.restore();
+
+drawing.fillText("Shapes - ellipse",10,1950);
+drawing.save();
+ellipse(100,2000,80,30);
+drawing.restore();
+
+drawing.fillText("Shapes - circular arc",10,2050);
+drawing.save();
+drawing.beginPath();
+drawing.arcTo(20, 2090, 50, 2110, 40);
+drawing.stroke();  
+drawing.restore();
+
+drawing.fillText("Shapes - clipping",10,2150);
+drawing.save();
+// Define clipping area
+drawing.rect(50,2160,200,70);
+drawing.stroke();
+drawing.clip();
+// test clipping
+drawing.fillStyle="blue";
+drawing.fillRect(0,2170,150,60);
+drawing.restore();
+
+drawing.fillText("Text - outline",10,2250);
+drawing.save();
+drawing.strokeStyle="#FF0000";
+drawing.font="50px Georgia";
+drawing.strokeText("Outlined text.",10,2310);
+drawing.restore();
+
+drawing.fillText("Text - filling",10,2350);
+drawing.save();
+drawing.fillStyle="#FF0000";
+drawing.font="50px Georgia";
+drawing.fillText("Color-filled text.",10,2410);
+drawing.restore();
+
+drawing.fillText("Bitmap - render",10,2450);
+//see windows.onload function at the very beginning of the code
+
+drawing.fillText("Bitmap - dynamic pixel buffer",10,2550);
+drawing.save();
+var mybuffer = drawing.createImageData(252, 100);
+var i;
+for (i = 0; i < mybuffer.data.length; i += 4) {
+  mybuffer.data[i+0] = i/300;
+  mybuffer.data[i+1] = i/200;
+  mybuffer.data[i+2] = i/300;
+  mybuffer.data[i+3] = 255;
+}
+drawing.putImageData(mybuffer, 20, 2560,10,10,200,100);
+drawing.restore();
+
+</script>
+
+</body>
+</html>
